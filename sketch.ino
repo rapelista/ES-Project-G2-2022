@@ -30,6 +30,7 @@ ReplyKeyboard replyKbd;
 
 const uint8_t LED = 2;
 bool isKeyboardActive;
+int state = 0;
 
 void setup() {
   pinMode(LED, OUTPUT);
@@ -75,42 +76,53 @@ void setup() {
 void loop() {
   TBMessage msg;
 
-  if (bot.getNewMessage(msg)) {
-    MessageType msgType = msg.messageType;
-    String msgText = msg.text;
-
-    switch (msgType) {
-      case MessageText:
-        Serial.print("Message received: ");
-        Serial.println(msgText);
-        
-        if (msgText.equalsIgnoreCase("/start")) {
-          startMessage(msg);
-        } else if (msgText.equalsIgnoreCase("/on") or msgText.equalsIgnoreCase("TURN ON")) {
-          turnOn(msg);
-        } else if (msgText.equalsIgnoreCase("/off") or msgText.equalsIgnoreCase("TURN OFF")) {
-          turnOff(msg);
-        } else if (msgText.equalsIgnoreCase("/status") or msgText.equalsIgnoreCase("STATUS")) {
-          checkStatus(msg);
-        } else if (msgText.equalsIgnoreCase("/menu") or msgText.equalsIgnoreCase("CLOSE")) {
-          if (isKeyboardActive) {
-            bot.removeReplyKeyboard(msg, "💡 Sembunyikan Menu");
-            isKeyboardActive = false;
-          } else {
-            bot.sendMessage(msg, "💡 Tampilkan Menu", replyKbd);
-            isKeyboardActive = true;
-          }
-        } else if (msgText.equalsIgnoreCase("/help") or msgText.equalsIgnoreCase("HELP")) {
-          helpMessage(msg);
-        } else {
-          bot.sendMessage(msg, "Perintah tidak tersedia!\n\nMasukkan kembali perintah atau buka bantuan /help");
+  switch(state) {
+    case 0:
+      if (bot.getNewMessage(msg)) {
+        MessageType msgType = msg.messageType;
+        String msgText = msg.text;
+    
+        switch (msgType) {
+          case MessageText:
+            Serial.print("Message received: ");
+            Serial.println(msgText);
+            
+            if (msgText.equalsIgnoreCase("/start")) {
+              startMessage(msg);
+            } else if (msgText.equalsIgnoreCase("/on") or msgText.equalsIgnoreCase("TURN ON")) {
+              turnOn(msg);
+            } else if (msgText.equalsIgnoreCase("/off") or msgText.equalsIgnoreCase("TURN OFF")) {
+              turnOff(msg);
+            } else if (msgText.equalsIgnoreCase("/status") or msgText.equalsIgnoreCase("STATUS")) {
+              checkStatus(msg);
+            } else if (msgText.equalsIgnoreCase("/menu") or msgText.equalsIgnoreCase("CLOSE")) {
+              if (isKeyboardActive) {
+                bot.removeReplyKeyboard(msg, "💡 Sembunyikan Menu");
+                isKeyboardActive = false;
+              } else {
+                bot.sendMessage(msg, "💡 Tampilkan Menu", replyKbd);
+                isKeyboardActive = true;
+              }
+            } else if (msgText.equalsIgnoreCase("/help") or msgText.equalsIgnoreCase("HELP")) {
+              helpMessage(msg);
+            } else if (msgText.equalsIgnoreCase("/state1")) {
+              state = 1;
+            } else {
+            }
+              bot.sendMessage(msg, "Perintah tidak tersedia!\n\nMasukkan kembali perintah atau buka bantuan /help");
+            }
+            
+            break;
+            
+          default:
+            break;
         }
-        
-        break;
-        
-      default:
-        break;
-    }
+      }
+      break;
+      
+    case 1:
+      bot.sendMessage(msg, "Ada di state 1");
+      break;
   }
 }
 
