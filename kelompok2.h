@@ -1,17 +1,17 @@
 #include <AsyncTelegram2.h>
 
-#define LIGHT_ON_NOW_CB "LightONNow"
-#define LIGHT_ON_15_CB "LightON15"
-#define LIGHT_ON_30_CB "LightON30"
-#define LIGHT_ON_60_CB "LightON60"
-#define LIGHT_ON_DURATION_CB "LightONDuration"
-#define LIGHT_ON_SCHEDULE_CB "LightONSchedule"
-#define LIGHT_OFF_NOW_CB "LightOFFNow"
-#define LIGHT_OFF_15_CB "LightOFF15"
-#define LIGHT_OFF_30_CB "LightOFF30"
-#define LIGHT_OFF_60_CB "LightOFF60"
-#define LIGHT_OFF_DURATION_CB "LightOFFDuratiOFF"
-#define LIGHT_OFF_SCHEDULE_CB "LightOFFSchedule"
+#define LIGHT_ON_NOW_CB "Hidupkan lampu sekarang"
+#define LIGHT_ON_15_CB "Hidupkan lampu selama 15 menit"
+#define LIGHT_ON_30_CB "Hidupkan lampu selama 30 menit"
+#define LIGHT_ON_60_CB "Hidupkan lampu selama 1 jam"
+#define LIGHT_ON_DURATION_CB "Hidupkan lampu dengan mengatur durasi"
+#define LIGHT_ON_SCHEDULE_CB "Hidupkan lampu dengan mengatur jadwal"
+#define LIGHT_OFF_NOW_CB "Matikan lampu sekarang"
+#define LIGHT_OFF_15_CB "Matikan lampu selama 15 menit"
+#define LIGHT_OFF_30_CB "Matikan lampu selama 30 menit"
+#define LIGHT_OFF_60_CB "Matikan lampu selama 1 jam"
+#define LIGHT_OFF_DURATION_CB "Matikan lampu dengan mengatur durasi"
+#define LIGHT_OFF_SCHEDULE_CB "Matikan lampu dengan mengatur jadwal"
 
 enum states {MAIN_STATE, SCHEDULE_STATE, DURATION_STATE} state;
 enum type_sch {toON, toOFF} type_schedule;
@@ -120,7 +120,7 @@ void setSchedule(TBMessage msg, int32_t toggleTime, type_sch type) {
   Serial.println((String)nowTime);
 
   if (nowTime > toggleTime) {
-    bot.sendMessage(msg, "⚠️Waktu sudah terlewat, silahkan set waktu dengan benar.");
+    bot.sendMessage(msg, "⚠️Waktu sudah terlewat, silahkan set waktu dengan benar!");
   } else {
     bot.sendMessage(msg, "⏱ Lampu akan <b>" + (String)((lightIsOn()) ? "dimatikan" : "dihidupkan") + "</b> pada pukul " + getFormattedTime(toggleTime) +" WIB");
     
@@ -187,7 +187,7 @@ String helpBot() {
 
 void startMessage(TBMessage msg) {
   String startMsg;
-  startMsg = "Hi. \n\n"
+  startMsg = "Hi, " + msg.sender.firstName + "!\n\n"
              "Status lampu sekarang dalam keadaan: " 
              + lightStatus() +
              "\n\nSilahkan gunakan bot ini dengan mengirimkan perintah berikut:\n\n"
@@ -210,9 +210,9 @@ void checkStatus(TBMessage msg) {
 } 
 
 void scheduleMessage(TBMessage msg) {
-  bot.sendMessage(msg, "Set waktu untuk penjadwalan: \n\n*dalam format <b>HH:MM</b>");
+  bot.sendMessage(msg, "⚙ Set waktu untuk penjadwalan: \n\n*dalam format <b>HH:MM</b>");
 }
 
 void durationMessage(TBMessage msg) {
-  bot.sendMessage(msg, "Set durasi dalam <b>menit</b>: ");
+  bot.sendMessage(msg, "⚙ Set durasi dalam <b>menit</b>: ");
 }

@@ -1,8 +1,3 @@
-/*
- * TO-DO
- * - add editMessage
- */
-
 #include <AsyncTelegram2.h>
 
 #include <time.h>
@@ -23,7 +18,7 @@ const char* token =  "5360848599:AAHBP3d9pdkjx3jJCxb3k-JhzkRyt_01yDE";
 #include "kelompok2.h"
 
 ReplyKeyboard replyKbd;
-InlineKeyboard lightOnKbd, lightOffKbd;
+InlineKeyboard lightOnKbd, lightOffKbd, dummy;
 
 void setup() {
   pinMode(LED, OUTPUT);
@@ -106,16 +101,16 @@ void loop() {
               startMessage(msg);
             } else if (msgText.equalsIgnoreCase("/on") or msgText.equalsIgnoreCase("TURN ON")) {
               if(lightIsOn()) {
-                bot.sendMessage(msg, "Lampu sudah hidup.");
+                bot.sendMessage(msg, "⚠️Lampu sudah hidup");
                 return;
               } else {
-                bot.sendMessage(msg, "Menu", lightOnKbd);
+                bot.sendMessage(msg, "⚙️ Menu: Hidupkan Lampu", lightOnKbd);
               }
             } else if (msgText.equalsIgnoreCase("/off") or msgText.equalsIgnoreCase("TURN OFF")) {
               if(!lightIsOn()) {
-                bot.sendMessage(msg, "Lampu sudah mati.");
+                bot.sendMessage(msg, "⚠️Lampu sudah mati");
               } else {
-                bot.sendMessage(msg, "Menu", lightOffKbd);
+                bot.sendMessage(msg, "⚙️ Menu: Matikan Lampu", lightOffKbd);
               }
             } else if (msgText.equalsIgnoreCase("/status") or msgText.equalsIgnoreCase("STATUS")) {
               checkStatus(msg);
@@ -130,7 +125,7 @@ void loop() {
             } else if (msgText.equalsIgnoreCase("/help") or msgText.equalsIgnoreCase("HELP")) {
               helpMessage(msg);
             } else {
-              bot.sendMessage(msg, "⚠ Perintah tidak tersedia!\n\nMasukkan kembali perintah atau buka bantuan /help");
+              bot.sendMessage(msg, "⚠️Perintah tidak tersedia!\n\nMasukkan kembali perintah atau buka bantuan /help");
             }
             
             break;
@@ -173,7 +168,10 @@ void loop() {
             } else if (msgText.equalsIgnoreCase(LIGHT_OFF_60_CB  )) {
               setDuration(msg, 60, toON);
             }
+            
             bot.endQuery(msg, "Loading...");
+            bot.editMessage(msg, "👉🏻 " + msgText, dummy);
+            
             break;
             
         }
@@ -183,6 +181,9 @@ void loop() {
         if (msgType == MessageText) {
           if (msgText.length() == 5 and msgText.indexOf(":") == 2) {
             setSchedule(msg);
+          } else if (msgText.equalsIgnoreCase("/cancel")) {
+            state = MAIN_STATE;
+            bot.sendMessage(msg, "👌🏼 Perintah dibatalkan");
           } else {
             bot.sendMessage(msg, "⚠️Format waktu salah. Silahkan masukkan ulang waktu dengan format <b>HH:MM</b>");
           }
@@ -194,6 +195,9 @@ void loop() {
           int duration = msgText.toInt();
           if (duration > 0) {
             setDuration(msg);
+          } else if (msgText.equalsIgnoreCase("/cancel")) {
+            state = MAIN_STATE;
+            bot.sendMessage(msg, "👌🏼 Perintah dibatalkan");
           } else {
             bot.sendMessage(msg, "⚠️Tidak bisa, silahkan set durasi dengan benar!");
           }
