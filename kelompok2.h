@@ -12,6 +12,7 @@
 #define LIGHT_OFF_60_CB "Matikan lampu selama 1 jam"
 #define LIGHT_OFF_DURATION_CB "Matikan lampu dengan mengatur durasi"
 #define LIGHT_OFF_SCHEDULE_CB "Matikan lampu dengan mengatur jadwal"
+#define LIGHT__CANCEL_CB "Perintah dibatalkan"
 
 enum states {MAIN_STATE, SCHEDULE_STATE, DURATION_STATE} state;
 enum type_sch {toON, toOFF} type_schedule;
@@ -43,6 +44,8 @@ void setupLightOnKeyboard(InlineKeyboard &kbd) {
   kbd.addRow();
   kbd.addButton("Duration", LIGHT_ON_DURATION_CB, KeyboardButtonQuery);
   kbd.addButton("Schedule", LIGHT_ON_SCHEDULE_CB, KeyboardButtonQuery);
+  kbd.addRow();
+  kbd.addButton("Cancel", LIGHT__CANCEL_CB, KeyboardButtonQuery);
 }
 
 void setupLightOffKeyboard(InlineKeyboard &kbd) {
@@ -54,6 +57,8 @@ void setupLightOffKeyboard(InlineKeyboard &kbd) {
   kbd.addRow();
   kbd.addButton("Duration", LIGHT_OFF_DURATION_CB, KeyboardButtonQuery);
   kbd.addButton("Schedule", LIGHT_OFF_SCHEDULE_CB, KeyboardButtonQuery);
+  kbd.addRow();
+  kbd.addButton("Cancel", LIGHT__CANCEL_CB, KeyboardButtonQuery);
 }
 
 bool lightIsOn() {

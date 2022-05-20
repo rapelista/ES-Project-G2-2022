@@ -154,11 +154,11 @@ void loop() {
               state = DURATION_STATE;
               type_schedule = toOFF;
               durationMessage(msg);
-            } else if (msgText.equalsIgnoreCase(LIGHT_ON_15_CB  )) {
+            } else if (msgText.equalsIgnoreCase(LIGHT_ON_15_CB)) {
               setDuration(msg, 15, toOFF);
-            } else if (msgText.equalsIgnoreCase(LIGHT_ON_30_CB  )) {
+            } else if (msgText.equalsIgnoreCase(LIGHT_ON_30_CB)) {
               setDuration(msg, 30, toOFF);
-            } else if (msgText.equalsIgnoreCase(LIGHT_ON_60_CB  )) {
+            } else if (msgText.equalsIgnoreCase(LIGHT_ON_60_CB)) {
               setDuration(msg, 60, toOFF);
             } else if (msgText.equalsIgnoreCase(LIGHT_OFF_NOW_CB)) {
               turnOff(msg);
@@ -170,17 +170,17 @@ void loop() {
               state = DURATION_STATE;
               type_schedule = toON;
               durationMessage(msg);
-            } else if (msgText.equalsIgnoreCase(LIGHT_OFF_15_CB  )) {
+            } else if (msgText.equalsIgnoreCase(LIGHT_OFF_15_CB)) {
               setDuration(msg, 15, toON);
-            } else if (msgText.equalsIgnoreCase(LIGHT_OFF_30_CB  )) {
+            } else if (msgText.equalsIgnoreCase(LIGHT_OFF_30_CB)) {
               setDuration(msg, 30, toON);
-            } else if (msgText.equalsIgnoreCase(LIGHT_OFF_60_CB  )) {
+            } else if (msgText.equalsIgnoreCase(LIGHT_OFF_60_CB)) {
               setDuration(msg, 60, toON);
             }
             
             bot.endQuery(msg, "Loading...");
-            bot.editMessage(msg, "👉🏻 " + msgText, dummy);
-            
+            bot.editMessage(msg, ((msgText.equalsIgnoreCase(LIGHT__CANCEL_CB)) ? "👌🏼 " : "👉🏻 ") + msgText, dummy);
+
             break;
             
         }
