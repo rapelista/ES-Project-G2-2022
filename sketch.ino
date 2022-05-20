@@ -22,7 +22,9 @@ InlineKeyboard lightOnKbd, lightOffKbd, dummy;
 
 void setup() {
   pinMode(LED, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
   
   Serial.begin(115200);
   Serial.println("Memulai program bot...");
@@ -58,9 +60,16 @@ void setup() {
   state = MAIN_STATE;
   type_schedule = toOFF;
   isScheduled = false;
+
+  lastTime = millis();
 }
 
 void loop() {
+  if (millis() - lastTime >= 1000) {
+    lastTime = millis();
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+  }
+  
   TBMessage msg;
 
   if (isScheduled) {

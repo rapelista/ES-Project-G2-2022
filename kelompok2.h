@@ -21,6 +21,8 @@ int32_t scheduleTime;
 bool isKeyboardActive, isScheduled;
 TBMessage scheduleMsg;
 
+unsigned long lastTime = 0;
+
 void setupReplyKeyboard(ReplyKeyboard &kbd) {
   kbd.addButton("TURN ON");
   kbd.addButton("TURN OFF");
