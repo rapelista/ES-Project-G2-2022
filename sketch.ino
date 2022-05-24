@@ -11,8 +11,8 @@ BearSSL::Session   session;
 BearSSL::X509List  certificate(telegram_cert);
 
 AsyncTelegram2 bot(client);
-const char* ssid  =  "NINGRUM77";
-const char* pass  =  "090021452";
+const char* ssid  =  "Base Camp";
+const char* pass  =  "akmalaldyekofadilfaqih";
 const char* token =  "5360848599:AAHBP3d9pdkjx3jJCxb3k-JhzkRyt_01yDE";
 
 #include "kelompok2.h"
