@@ -52,6 +52,8 @@ void setup() {
   Serial.print("Bot name: @");
   Serial.print(bot.getBotName());
 
+  ESP.wdtDisable();
+
   setupReplyKeyboard(replyKbd);
   setupLightOnKeyboard(lightOnKbd);
   setupLightOffKeyboard(lightOffKbd);
@@ -66,8 +68,9 @@ void setup() {
 
 void loop() {
   if (millis() - lastTime >= 1000) {
-    lastTime = millis();
+    ESP.wdtFeed();
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    lastTime = millis();
   }
   
   TBMessage msg;
