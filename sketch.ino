@@ -91,10 +91,9 @@ void loop() {
       }
       isScheduled = false;
     } else {  
-      // nanti dihapus aja
-      // Serial.println("scheduleTime: " + (String)scheduleTime);
-      // Serial.println("now: " + (String)now);
-      // Serial.println("scheduleTime - now: " + (String) (scheduleTime - now));
+      Serial.println("scheduleTime: " + (String)scheduleTime);
+      Serial.println("now: " + (String)now);
+      Serial.println("scheduleTime - now: " + (String) (scheduleTime - now));
     }
   }
 
